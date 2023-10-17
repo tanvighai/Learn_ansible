@@ -2,6 +2,6 @@
    hosts: localhost
    become: yes
    tasks:
-     - name: Print hello world
-       ansible.builtin.debug:
-         msg: hello world
+      - name: Print hello world
+        ansible.builtin.debug:
+          msg: hello world
