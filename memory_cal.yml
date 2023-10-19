@@ -1,22 +1,43 @@
 - name: print used memory
   hosts: localhost
   tasks:
-    - name: get memory
-      ansible.builtin.shell: free | grep Mem | xargs
-      register: free
-      #to store the output of a task in Ansible we use register
-    - name: set fact
-      ansible.builtin.set_fact:
-        FREE: "{{free.stdout | split(' ')}}"
-
-
-    - name: set facts
-      ansible.builtin.set_fact:
-        total: "{{ FREE[1] }}"
-        free: "{{ FREE[3] }}"
-        used_mem: "{{ 100 - (FREE[3]|int / FREE[1] | int * 100) }}"
-
-    - name: Print free output
+    - name: Memory Good
       ansible.builtin.debug:
+       msg: memory good
+      when: ansible_memory_mb["real"]["used"] / ansible_memory_mb["real"]["total"] * 100 < 50
 
-        msg: "{{ used_mem }}"
+
+
+    - name: Memory Orange
+      ansible.builtin.debug:
+        msg: memory orange
+      when: ansible_memory_mb["real"]["used"] / ansible_memory_mb["real"]["total"] * 100 > 50 and ansible_memory_mb["real"]["used"] / ansible_memory_mb["real"]["total"] * 100 < 70
+
+
+    - name: Memory Red
+      ansible.builtin.debug:
+        msg: memory red
+      when: ansible_memory_mb["real"]["used"] / ansible_memory_mb["real"]["total"] * 100 > 70
+
+
+
+
+        #  - name: get memory
+    #  ansible.builtin.shell: free | grep Mem | xargs
+     # register: free
+      #to store the output of a task in Ansible we use register
+   # - name: set fact
+    #  ansible.builtin.set_fact:
+     #   FREE: "{{free.stdout | split(' ')}}"
+
+
+    #- name: set facts
+     # ansible.builtin.set_fact:
+      #  total: "{{ FREE[1] }}"
+       # free: "{{ FREE[3] }}"
+        #used_mem: "{{ 100 - (FREE[3]|int / FREE[1] | int * 100) }}"
+
+    #- name: Print free output
+     # ansible.builtin.debug:
+
+      #  msg: "{{ used_mem }}"
