@@ -12,9 +12,9 @@
 
     - name: set facts
       ansible.builtin.set_facts:
-        total: "{{FREE[1]}}"
-        free: "{{FREE[3]}}"
-        used_mem: "{{100 - (free|int / total | int * 100)}}"
+        total: "{{ FREE[1] }}"
+        free: "{{ FREE[3] }}"
+        used_mem: "{{ 100 - (free|int / total | int * 100) }}"
 
     - name: Print free output
       ansible.builtin.debug:
