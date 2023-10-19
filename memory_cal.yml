@@ -2,10 +2,21 @@
   hosts: localhost
   tasks:
     - name: get memory
-      ansible.builtin.shell: free | grep Mem
-
-      #to store the output of a tsk in Ansible we use register
+      ansible.builtin.shell: free | grep Mem | xargs
       register: free
-    - name: print free variable
+      #to store the output of a task in Ansible we use register
+    - name: Set a fact
+      ansible.builtin.set_fact:
+        FREE: "{{free.stdout | split(' ')}}"
+
+
+    - name: set facts
+      ansible.builtin.set_facts:
+        total: "{{FREE[1]}}"
+        free: "{{FREE[3]}}"
+        used_mem: "{{100 - (free|int / total | int * 100)}}"
+
+    - name: Print free output
       ansible.builtin.debug:
-        msg: "{{free.stdout}}"
+
+        msg: "{{free|int / total | int * 100 }}"
