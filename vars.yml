@@ -7,29 +7,29 @@
           msg: hello world
 
 #variale at playbook level
- - name: Demo on vars
-   hosts: localhost
-   vars:
-     URL: example.com
-   tasks:
-     - name: print a variable
-       ansible.builtin.debug:
-         msg: "{{ URL }}"
+# - name: Demo on vars
+ #  hosts: localhost
+  # vars:
+   #  URL: example.com
+   #tasks:
+    # - name: print a variable
+     #  ansible.builtin.debug:
+      #   msg: "{{ URL }}"
  #where URL is a variale
 
 
 ## decalaring varibales at task level
 
- - name: Demo on vars
-   hosts: localhost
-   vars:
-     URL: play.example.com
+ #- name: Demo on vars
+  # hosts: localhost
+   #vars:
+    # URL: play.example.com
 
-   tasks:
-     - name: print a variable
-       ansible.builtin.debug:
-         msg: "{{ URL }}"
-       vars:
-          URL: example.com
+   #tasks:
+    # - name: print a variable
+     #  ansible.builtin.debug:
+     #    msg: "{{ URL }}"
+      # vars:
+       #   URL: example.com
 
  #command line  variables will have more precedence than any other variable
